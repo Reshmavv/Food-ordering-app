@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext,useEffect } from 'react';
 
 import MealItemForm from './MealItemForm';
 import classes from './MealItem.module.css';
@@ -6,8 +6,18 @@ import CartContext from '../../../store/cart-context';
 
 const MealItem = (props) => {
   const cartCtx = useContext(CartContext);
+   let price; 
+   const priceChange=()=>{
 
-  const price = `$${props.price.toFixed(2)}`;
+    price =  props.price ? props.price.toFixed(2) : null;
+   };
+    useEffect(()=>{ 
+      priceChange();
+  },
+
+  [props.price]);
+ 
+  console.log(typeof(props.price),"hi");
 
   const addToCartHandler = amount => {
     cartCtx.addItem({
