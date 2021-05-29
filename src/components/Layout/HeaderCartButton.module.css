@@ -40,6 +40,17 @@
   animation: bump 300ms ease-out;
 }
 
+.btn-list{
+ list-style-type:none;
+ display: flex;
+
+ 
+  
+}
+.btn-list-order{
+  float: left;
+}
+
 @keyframes bump {
   0% {
     transform: scale(1);

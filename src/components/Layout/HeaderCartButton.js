@@ -32,13 +32,29 @@ const HeaderCartButton = (props) => {
   }, [items]);
 
   return (
+    <div>
+      <ul className={classes['btn-list']}>
+      <div>
+        <li className={classes['btn-list-order']}>
     <button className={btnClasses} onClick={props.onClick}>
       <span className={classes.icon}>
         <CartIcon />
       </span>
       <span>Your Cart</span>
       <span className={classes.badge}>{numberOfCartItems}</span>
-    </button>
+    </button></li>
+    
+
+ </div>
+ <div>
+ <li className={classes['btn-list-order']}>
+     <button className={btnClasses} >
+     <span>Show orders</span>
+     </button>
+     </li>
+     </div>
+   </ul>
+   </div>
   );
 };
 

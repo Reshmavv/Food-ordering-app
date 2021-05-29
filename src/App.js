@@ -1,25 +1,30 @@
-import { useState } from 'react';
 
+import {useDispatch,useSelector} from 'react-redux';
 import Header from './components/Layout/Header';
 import Meals from './components/Meals/Meals';
 import Cart from './components/Cart/Cart';
 import CartProvider from './store/CartProvider';
 
+import {uiActions} from './store/ui-slice';
+
+
 function App() {
-  const [cartIsShown, setCartIsShown] = useState(false);
+  const dispatch=useDispatch();
+ const showCart= useSelector(state=>state.ui.cartIsShown);
+ // const [cartIsShown, setCartIsShown] = useState(false);
 
   const showCartHandler = () => {
-    setCartIsShown(true);
+    dispatch(uiActions.setCartIsShown());//setCartIsShown(true);
   };
 
   const hideCartHandler = () => {
-    setCartIsShown(false);
+    dispatch(uiActions.setCartIsShown());
   };
 
   return (
     <CartProvider>
-      {cartIsShown && <Cart onClose={hideCartHandler} />}
-      <Header onShowCart={showCartHandler} />
+      {showCart && <Cart onClose={hideCartHandler} />}
+     {!showCart &&<Header onShowCart={showCartHandler} />}
       <main>
         <Meals />
       </main>
