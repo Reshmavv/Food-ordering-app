@@ -48,7 +48,27 @@
   
 }
 .btn-list-order{
+  padding: 20px;
   float: left;
+  border:15px;
+  margin:8px;
+
+
+}
+.button-order{
+  cursor: pointer;
+  font: inherit;
+  border: none;
+  background-color: #4d1601;
+  color: white;
+  /* padding: 0.75rem 3rem; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius:25px;
+  font-weight: bold;
+  padding:15px 68px;
+
 }
 
 @keyframes bump {

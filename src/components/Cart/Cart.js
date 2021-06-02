@@ -1,16 +1,25 @@
-import React, { useContext, useState } from 'react';
+import React,{useContext} from 'react';
+import {useSelector,useDispatch } from 'react-redux';
 
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
 import CartContext from '../../store/cart-context';
 import Checkout from './Checkout';
+import cartSlice from '../../store/cart-slice';
+import {cartActions} from '../../store/cart-slice';
 
 const Cart = (props) => {
-  const [isCheckout, setIsCheckout] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [didSubmit, setDidSubmit] = useState(false);
-  const cartCtx = useContext(CartContext);
+  //const [isCheckout, setIsCheckout] = useState(false);
+  //const [isSubmitting, setIsSubmitting] = useState(false);
+ // const [didSubmit, setDidSubmit] = useState(false);
+   const cartCtx = useContext(CartContext);
+
+   const dispatch=useDispatch();
+
+  const checkout=useSelector((state)=>state.cart.isCheckout);
+  const submitting=useSelector((state)=>state.cart.isSubmitting);
+  const didSubmit=useSelector((state)=>state.cart.didSubmit);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -24,11 +33,12 @@ const Cart = (props) => {
   };
 
   const orderHandler = () => {
-    setIsCheckout(true);
+    dispatch(cartActions.setIsCheckout());
+   // setIsCheckout(true);
   };
 
   const submitOrderHandler = async (userData) => {
-    setIsSubmitting(true);
+    dispatch(cartActions.setIsSubmitting());
     await fetch('https://food-ordering-app-700fa-default-rtdb.firebaseio.com/orders.json', {
       method: 'POST',
       body: JSON.stringify({
@@ -36,8 +46,8 @@ const Cart = (props) => {
         orderedItems: cartCtx.items,
       }),
     });
-    setIsSubmitting(false);
-    setDidSubmit(true);
+    dispatch(cartActions.setIsSubmitting());//setIsSubmitting(false);
+    dispatch(cartActions.setDidSubmit());//setDidSubmit(true);
     cartCtx.clearCart();
   };
 
@@ -76,10 +86,10 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && (
+      {checkout && (
         <Checkout onConfirm={submitOrderHandler} onCancel={props.onClose} />
       )}
-      {!isCheckout && modalActions}
+      {!checkout && modalActions}
     </React.Fragment>
   );
 
@@ -98,9 +108,9 @@ const Cart = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
-      {!isSubmitting && !didSubmit && cartModalContent}
-      {isSubmitting && isSubmittingModalContent}
-      {!isSubmitting && didSubmit && didSubmitModalContent}
+      {!submitting && !didSubmit && cartModalContent}
+      {submitting && isSubmittingModalContent}
+      {!submitting && didSubmit && didSubmitModalContent}
     </Modal>
   );
 };

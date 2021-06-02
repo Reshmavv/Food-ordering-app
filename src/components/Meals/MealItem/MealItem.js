@@ -17,7 +17,7 @@ const MealItem = (props) => {
 
   [props.price]);
  
-  console.log(typeof(props.price),"hi");
+ // console.log(typeof(props.price),"hi");
 
   const addToCartHandler = amount => {
     cartCtx.addItem({

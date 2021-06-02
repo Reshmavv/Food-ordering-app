@@ -6,6 +6,7 @@ import Cart from './components/Cart/Cart';
 import CartProvider from './store/CartProvider';
 
 import {uiActions} from './store/ui-slice';
+//import Orders from './components/Orders/Order';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <main>
         <Meals />
       </main>
+   
     </CartProvider>
   );
 }
